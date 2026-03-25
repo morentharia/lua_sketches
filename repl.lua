@@ -11,7 +11,7 @@ function M.my_statusline()
 	return table.concat({
 		-- нужна для /home/mor/code/pyzlodeistva/src/pyzlo/commands/tmux/automate_scripts/vimplugin_lua.py
 		-- что бы тмукс плагин мой палил это окошко вима или нет
-		"vim_lua_repl_yeah_ITS_VIM",
+		"vim_lua_repl_yeah_ITS_VIM_FLAG",
 		-- " %f ",                -- Путь к файлу
 		-- " %m%r",               -- Флаги изменения/чтения
 		-- "%=",                  -- Разделитель (всё после него уйдет вправо)
