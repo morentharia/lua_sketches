@@ -43,13 +43,39 @@ function M.find_buffers()
 	end)
 end
 
+function M.REPL()
+	--tables within tables
+	local data = {
+		{ "billy", 12 },
+		{ "john", 20 },
+		{ "andy", 65 },
+	}
+
+	for a = 1, #data do
+		print(data[a][1] .. " is " .. data[a][2] .. " years old")
+	end
+end
+
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		-- Задержка в 0 мс через schedule гарантирует, что
 		-- UI (окна и плагины) полностью отрисовались
+
 		vim.schedule(function()
-			M.find_buffers()
-			vim.api.nvim_feedkeys("search_text", "t", false)
+			-- M.find_buffers()
+			-- vim.api.nvim_feedkeys("search_text", "t", false)
+
+			M.REPL()
+			-- vim.cmd("messages")
+			-- print("vim_lua_repl_yeah_ITS_VIM_FLAG")
+			-- local messages = vim.fn.execute("messages")
+			-- vim.fn.input(messages)
+			-- Захватываем вывод команды messages
+			local messages = vim.fn.execute("messages")
+			-- -- Создаем новое окно и вставляем туда текст
+			vim.cmd("new")
+			local buf = vim.api.nvim_get_current_buf()
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(messages, "\n"))
 		end)
 	end,
 })
