@@ -55,12 +55,12 @@ local Terminal = require("toggleterm.terminal").Terminal
 
 local M = {}
 
-local state = {
-	floating = {
-		buf = -1,
-		win = -1,
-	},
-}
+-- local state = {
+-- 	floating = {
+-- 		buf = -1,
+-- 		win = -1,
+-- 	},
+-- }
 
 local main_term = Terminal:new({
 	cmd = vim.o.shell,
@@ -107,12 +107,12 @@ logger = logging.getLogger(__name__)
 		main_term:toggle()
 	end, { desc = "Toggle Main Terminal" })
 
-	-- vim.keymap.set("n", "<leader>rr", function()
-	-- 	M.run_http_request()
-	-- end, { desc = "Toggle Main Terminal" })
+	vim.keymap.set("n", "<leader>rh", function()
+		M.run_http_request()
+	end, { desc = "Run http request" })
 	vim.keymap.set("n", "<M-g>", function()
 		M.run_http_request()
-	end, { desc = "Toggle Main Terminal" })
+	end, { desc = "Run http request" })
 
 	-- Передаем саму функцию, а не строку с вызовом
 	vim.keymap.set("v", "<leader>ee", function()
@@ -453,6 +453,7 @@ function M.py_hackvector_process_visual_selection()
 	local separator = (vim.bo.fileformat == "dos") and "\r\n" or "\n"
 
 	local full_text = table.concat(lines, separator)
+	-- TODO: only base64 do it for all menu
 	local cmd = string.format([[HackvectorFactory.get_by_tag_name("base64")().decode(b'%s')]], full_text)
 	local result = vim.fn.py3eval(cmd)
 
