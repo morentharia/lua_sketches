@@ -2,9 +2,11 @@
 --
 -- nvim -c "source /home/mor/code/lua_sketches/repl.lua" -c "autocmd VimEnter * lua M.find_buffers()"
 -- nvim -S /home/mor/code/lua_sketches/repl.lua
+-- nvim -S ~/code/lua_sketches/repl/repl.lua
 
 -- run nvim without any plugins
 -- nvim -u NONE
+-- nvim -u NONE -S ~/code/lua_sketches/repl/repl.lua
 --
 -- local M = {}
 M = {}
@@ -38,6 +40,15 @@ vim.opt.rtp:append(vim.fn.stdpath("data") .. "/lazy/fzf")
 vim.opt.rtp:append(vim.fn.stdpath("data") .. "/lazy/fzf.nvim")
 vim.cmd("runtime plugin/fzf.vim")
 -- vim.opt.rtp:append(vim.fn.stdpath("data") .. "/lazy/fzf-lua")
+
+function _G.set_terminal_keymaps()
+	local opts = { buffer = 0 }
+	vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+	vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
+end
+
+-- Применять эти правила только когда открыт терминал
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 vim.cmd("colorscheme pablo")
 
@@ -140,9 +151,10 @@ function M.get_res_buffer(main_buf)
 		vim.bo[res_buf].filetype = "http"
 		vim.b[main_buf].result_buffer = res_buf
 
+		local ctx = M.get_or_create_tab_context()
 		-- ГВОЗДЬ ПРОГРАММЫ: следим за закрытием ОКНА запроса
 		vim.api.nvim_create_autocmd("WinClosed", {
-			pattern = tostring(main_win),
+			pattern = tostring(ctx.main_win),
 			callback = function()
 				-- schedule откладывает выполнение, чтобы избежать ошибки E855
 				vim.schedule(function()
@@ -198,7 +210,7 @@ function M.get_or_create_tab_context()
 end
 
 function M.run_http_request()
-	-- todo: func get_or_create_tab_context use it
+	-- TODO: func get_or_create_tab_context use it!!!!
 	local tid = vim.api.nvim_get_current_tabpage()
 
 	-- 1. Инициализация контекста
