@@ -446,10 +446,11 @@ function M.py_menu_list()
 	vim.fn["fzf#run"](opts)
 end
 
-function M.py_hackvector_process_visual_selection()
+function M.py_hackvector_process_visual_selection(selected)
 	-- 1. Сначала выходим из визуального режима в нормальный,
 	-- чтобы метки '< и '> обновились
 	--
+	print("menu item title -->" .. selected .. "<---END")
 	vim.cmd([[execute "normal! \<Esc>"]])
 	-- 1. Получаем координаты выделения ('<' и '>')
 	local _, s_row, s_col, _ = unpack(vim.fn.getpos("'<"))
@@ -466,8 +467,14 @@ function M.py_hackvector_process_visual_selection()
 
 	local full_text = table.concat(lines, separator)
 	-- TODO: only base64 do it for all menu
-	local cmd = string.format([[HackvectorFactory.get_by_tag_name("base64")().decode(b'%s')]], full_text)
+	-- local cmd = string.format([[HackvectorFactory.get_by_tag_name("base64")().decode(b'%s')]], full_text)
+
+	local cmd = string.format([[HackvectorFactory.get("%s")().decode(b'%s')]], selected, full_text)
 	local result = vim.fn.py3eval(cmd)
+
+	local cmd = string.format([[HackvectorFactory.get("%s").name]], selected)
+	local tag_name = vim.fn.py3eval(cmd)
+	result = string.format("<@%s>%s<@/%s>", tag_name, result, tag_name)
 
 	-- local result_lines = vim.split(result, "[\r\n]+")
 	local result_lines = vim.split(result, separator)
@@ -478,7 +485,7 @@ function M.py_hackvector_menu_list()
 	local opts = vim.fn["fzf#wrap"]("PyHackvectorMenu", {
 		source = vim.fn.py3eval("HackvectorFactory.keys()"),
 		sink = function(selected)
-			M.py_hackvector_process_visual_selection()
+			M.py_hackvector_process_visual_selection(selected)
 			-- local res = vim.fn.py3eval(string.format("select_from_vim('%s', '%s')", selected, json_menu_ctx))
 			-- vim.print(res)
 		end,
