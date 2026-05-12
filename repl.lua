@@ -140,7 +140,7 @@ function M.REPL()
 	vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/blablbalba.http")
 	-- vim.cmd("e /home/mavostrykh/hack/notes/crm_dwh/src/public_crm/dwh-service/package-lock.json")
 
-	run_http_request()
+	-- run_http_request()
 	-- run_http_request()
 	-- run_http_request()
 
