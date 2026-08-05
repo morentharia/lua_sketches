@@ -37,7 +37,14 @@ local M = {}
 
 function M.REPL()
 	-- vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/hahatest.new_http")
-	vim.cmd("e /home/mavostrykh/hack/notes/budget/repeater/asfdasdf.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/budget/repeater/asfdasdf.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/again.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/v2_projectx.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/vkcloud/repeater/check_vuln/delete_share.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/vkcloud/repeater/check_vuln/check_strip.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/vkcloud/repeater/check_vuln/check_strip_cookie.http")
+	-- vim.cmd("e /home/mavostrykh/hack/notes/taxmonitor/repeater/wiki_graphql/lala.http")
+	vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/newgofunc/save_user.http")
 	-- vim.cmd("e /home/mavostrykh/hack/notes/crm_dwh/src/public_crm/dwh-service/package-lock.json")
 
 	-- run_http_request()

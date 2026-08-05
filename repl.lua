@@ -136,46 +136,26 @@ function run_http_request()
 end
 
 function M.REPL()
+	vim.print("yeah")
 	-- vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/hahatest.new_http")
-	vim.cmd("e /home/mavostrykh/hack/notes/s3/repeater/blablbalba.http")
-	-- vim.cmd("e /home/mavostrykh/hack/notes/crm_dwh/src/public_crm/dwh-service/package-lock.json")
+	--
+	--
+	--
+	local lsp_restart_group = vim.api.nvim_create_augroup("LspAutoRestart", { clear = true })
 
-	-- run_http_request()
-	-- run_http_request()
-	-- run_http_request()
+	vim.api.nvim_create_autocmd({ "VimEnter", "FocusGained" }, {
+		group = lsp_restart_group,
+		pattern = "*",
+		callback = function()
+			-- Просто выводим сообщение на экран
+			-- Получаем текущее время в формате ЧЧ:ММ:СС
+			local current_time = os.date("%H:%M:%S")
 
-	if false then
-		-- feed("oNew line<esc>")
-		if false then
-			cmd = "ls -l"
-			vim.api.nvim_exec("vnew", true)
-			vim.api.nvim_exec("terminal", true)
-			local buf = vim.api.nvim_get_current_buf()
-			-- vim.print({ [8] = 2, [3] = 4 })
-			vim.api.nvim_buf_set_name(buf, "cheatsheet-" .. buf)
-			vim.api.nvim_buf_set_option(buf, "filetype", "cheat")
-			-- vim.api.nvim_buf_set_option(buf, "syntax", lang)
-
-			local chan_id = vim.b.terminal_job_id
-			local cht_cmd = "curl cht.sh/" .. cmd
-			vim.api.nvim_chan_send(chan_id, cht_cmd .. "\r\n")
-			vim.cmd([[stopinsert]])
-		end
-
-		-- A sample license plate number is "1MGU103".
-		-- It has one digit, three uppercase letters and three digits.
-		local regex_1 = vim.regex([[\d\u\u\u\d\d\d]])
-		local regex_2 = vim.regex([[\d\u\{3}\d\{3}]])
-		local regex_3 = vim.regex([[[0-9][A-Z]\{3}[0-9]\{3}]])
-
-		local match_str = "This is a plate number 1ABC999"
-
-		-- fastfingers:open()
-
-		-- vim.print(regex_1:match_str(match_str))
-		-- vim.print(regex_2:match_str(match_str))
-		-- vim.print(regex_3:match_str(match_str))
-	end
+			-- Выводим сообщение с временной меткой
+			vim.notify("[" .. current_time .. "] Ты вернулся в окно Neovim!", vim.log.levels.INFO)
+			-- vim.print(vim.lsp.)
+		end,
+	})
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
